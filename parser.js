@@ -28,7 +28,13 @@ function parseContent(category,url,content,callback) {
     });
     if(result.length>0){
         if(contentArray.length==result.length) {
-            callback(url,contentArray);
+            var temp = [];
+            for(var i=0;i<contentArray.length;i++){
+                if(!contentArray[i].includes("READ:")){
+                    temp.push(contentArray[i]);
+                }
+            }
+            callback(url,temp);
         }
     }
 }
