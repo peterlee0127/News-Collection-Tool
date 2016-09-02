@@ -1,5 +1,7 @@
 const xmlParseString = require('xml2js').parseString;
 
+const network = require('./network.js');
+
 function parseCategory(text,callback) {
     xmlParseString(text, function (err, result) {
         var resultArray = [];
@@ -26,6 +28,13 @@ function parseContent(category,url,content,callback) {
         var item = $(this).text();
         contentArray.push(item) ;
     });
+
+    var dict = {};
+    let title = $('title').each(function(i, elem) {
+        var item = $(this).text();
+        dict.title = item;
+    });
+    dict.url = url;
     if(result.length>0){
         if(contentArray.length==result.length) {
             var temp = [];
@@ -34,10 +43,35 @@ function parseContent(category,url,content,callback) {
                     temp.push(contentArray[i]);
                 }
             }
-            callback(url,temp);
+            temp = temp.join(" ")
+            dict.content = temp;
+            callback(dict);
         }
     }
 }
 
-exports.parseCategory = parseCategory;
-exports.parseContent = parseContent;
+function getNews(categoryArray){
+    for(var i=0;i<categoryArray.length;i++){
+        var cate = categoryArray[i];
+        network.download(cate.url,function(category) {
+            parseCategory(category,function(categoryList){
+                categoryList.forEach(function(item,index) {
+                    downloadContent(cate,item);
+                });
+            });
+        });
+    }
+}
+
+function downloadContent(cate,item) {
+    const url = item.link;
+    network.download(url,function(content){
+        parseContent(cate,url,content,function(result){
+                console.log(result);
+                console.log("---------\n");
+        });
+    });
+}
+
+
+exports.getNews = getNews;
