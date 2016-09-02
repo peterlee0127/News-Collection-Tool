@@ -32,7 +32,11 @@ function parseContent(category,url,content,callback) {
     var dict = {};
     let title = $('title').each(function(i, elem) {
         var item = $(this).text();
-        dict.title = item;
+        var arr = item.split("-");
+        if(arr.length>1){
+            dict.title = arr[0];
+            dict.date = arr[1];
+        }
     });
     dict.url = url;
     if(result.length>0){
@@ -52,7 +56,7 @@ function parseContent(category,url,content,callback) {
 
 function getNews(categoryArray){
     for(var i=0;i<categoryArray.length;i++){
-        var cate = categoryArray[i];
+        const cate = categoryArray[i];
         network.download(cate.url,function(category) {
             parseCategory(category,function(categoryList){
                 categoryList.forEach(function(item,index) {
@@ -63,12 +67,16 @@ function getNews(categoryArray){
     }
 }
 
+const fs = require('fs');
+
 function downloadContent(cate,item) {
     const url = item.link;
     network.download(url,function(content){
         parseContent(cate,url,content,function(result){
-                console.log(result);
-                console.log("---------\n");
+                var title = result.title;
+                var filename = "data/"+cate.name+"/"+title+".txt";
+                fs.writeFile(filename,result.content);
+                // console.log("---------\n");
         });
     });
 }
