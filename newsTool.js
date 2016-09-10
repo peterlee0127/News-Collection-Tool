@@ -11,9 +11,10 @@ function parseCategory(text,callback) {
             var dict = {};
             dict.title = item.title[0];
             dict.link = item.link[0];
-            dict.pubDate = item.pubDate[0];
+            // dict.pubDate = item.pubDate[0];
             resultArray.push(dict);
         }
+
         callback(resultArray);
     });
 }
@@ -36,6 +37,8 @@ function parseContent(category,url,content,callback) {
         if(arr.length>1){
             dict.title = arr[0];
             dict.date = arr[1];
+        }else {
+            dict.title = arr[0];
         }
     });
     dict.url = url;
@@ -57,14 +60,18 @@ function parseContent(category,url,content,callback) {
 function getNews(categoryArray){
     for(var i=0;i<categoryArray.length;i++){
         const cate = categoryArray[i];
-        network.download(cate.url,function(category) {
-            parseCategory(category,function(categoryList){
-                categoryList.forEach(function(item,index) {
-                    downloadContent(cate,item);
-                });
+        setTimeout(down,i*6000,cate);
+    }
+}
+function down(cate) {
+    console.log(cate.name);
+    network.download(cate.url,function(category) {
+        parseCategory(category,function(categoryList){
+            categoryList.forEach(function(item,index) {
+                setTimeout(downloadContent,100*index,cate,item);
             });
         });
-    }
+    });
 }
 
 const fs = require('fs');
@@ -74,6 +81,7 @@ function downloadContent(cate,item) {
     network.download(url,function(content){
         parseContent(cate,url,content,function(result){
                 var title = result.title;
+                title = title.replace(':','').replace('/','');
                 var filename = "data/"+cate.name+"/"+title+".txt";
                 fs.writeFile(filename,result.content);
                 // console.log("---------\n");
