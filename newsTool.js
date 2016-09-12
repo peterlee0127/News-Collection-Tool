@@ -1,6 +1,9 @@
 const xmlParseString = require('xml2js').parseString;
 
 const network = require('./network.js');
+const fs = require('fs');
+
+require('events').EventEmitter.prototype._maxListeners = 1000000;
 
 function parseCategory(text,callback) {
     xmlParseString(text, function (err, result) {
@@ -11,10 +14,8 @@ function parseCategory(text,callback) {
             var dict = {};
             dict.title = item.title[0];
             dict.link = item.link[0];
-            // dict.pubDate = item.pubDate[0];
             resultArray.push(dict);
         }
-
         callback(resultArray);
     });
 }
@@ -22,6 +23,7 @@ function parseCategory(text,callback) {
 const cheerio = require('cheerio');
 
 function parseContent(category,url,content,callback) {
+    fs.writeFile("test.html",content);
     let $ = cheerio.load(content);
     var contentArray = [];
     var format = category.format;
@@ -46,7 +48,7 @@ function parseContent(category,url,content,callback) {
         if(contentArray.length==result.length) {
             var temp = [];
             for(var i=0;i<contentArray.length;i++){
-                if(!contentArray[i].includes("READ:")){
+                if(!contentArray[i].includes("READ:") && !contentArray[i].includes("A version of this article")){
                     temp.push(contentArray[i]);
                 }
             }
@@ -60,7 +62,7 @@ function parseContent(category,url,content,callback) {
 function getNews(categoryArray){
     for(var i=0;i<categoryArray.length;i++){
         const cate = categoryArray[i];
-        setTimeout(down,i*6000,cate);
+        setTimeout(down,i*10000,cate);
     }
 }
 function down(cate) {
@@ -74,7 +76,7 @@ function down(cate) {
     });
 }
 
-const fs = require('fs');
+
 
 function downloadContent(cate,item) {
     const url = item.link;

@@ -1,11 +1,12 @@
 const newsTool = require('./newsTool.js');
 const category = require('./category.js');
 
-const travel = category.travel;
-const money = category.money;
-const entertainment = category.entertainment;
-const sport = category.sport;
-const tech = category.tech;
-const health = category.health;
+const travel = category.cnn_travel;
+const money = category.cnn_money;
+const entertainment = category.cnn_entertainment;
+const sport = category.cnn_sport;
+const tech = category.cnn_tech;
+const health = category.cnn_health;
+const politics = category.cnn_politics;
 
-newsTool.getNews([travel,money,entertainment,sport,tech,health]);
+newsTool.getNews([politics,travel,money,entertainment,sport,tech,health]);
