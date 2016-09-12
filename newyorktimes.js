@@ -9,4 +9,4 @@ const health = category.newyork_health;
 const travel = category.newyork_travel;
 const money = category.newyork_money;
 
-newsTool.getNews([tech,entertainment,politics,sport,health,travel,money]);
+newsTool.getNews([money,tech,entertainment,politics,sport,health,travel]);

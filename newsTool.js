@@ -23,7 +23,6 @@ function parseCategory(text,callback) {
 const cheerio = require('cheerio');
 
 function parseContent(category,url,content,callback) {
-    fs.writeFile("test.html",content);
     let $ = cheerio.load(content);
     var contentArray = [];
     var format = category.format;
@@ -76,15 +75,15 @@ function down(cate) {
     });
 }
 
-
-
 function downloadContent(cate,item) {
     const url = item.link;
     network.download(url,function(content){
         parseContent(cate,url,content,function(result){
                 var title = result.title;
-                title = title.replace(':','').replace('/','');
-                var filename = "data/"+cate.name+"/"+title+".txt";
+                title = title.replace('‘','').replace(':','').replace('/','');
+                var crypto = require('crypto');
+                var hash = crypto.createHash('md5').update(title).digest('hex');
+                var filename = "data/"+cate.name+"/"+hash+".txt";
                 fs.writeFile(filename,result.content);
                 // console.log("---------\n");
         });
