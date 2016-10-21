@@ -30,7 +30,7 @@ String.prototype.removeStopWords = function()
 
 
 
-var stopWords = "a,able,about,above,abst,accordance,according,accordingly,across,act,actually,added,adj,\
+var stopWords = "white,black,red,yellow,men,lots,set,talk,walk,better,du,a,dr,able,about,above,abst,accordance,according,accordingly,across,act,actually,added,adj,\
 affected,affecting,affects,after,afterwards,again,against,ah,all,almost,alone,along,already,also,although,\
 always,am,among,amongst,an,and,announce,another,any,anybody,anyhow,anymore,anyone,anything,anyway,anyways,\
 anywhere,apparently,approximately,are,aren,arent,arise,around,as,aside,ask,asking,at,auth,available,away,awfully,\
@@ -63,7 +63,7 @@ tried,tries,truly,try,trying,ts,twice,two,u,un,under,unfortunately,unless,unlike
 useful,usefully,usefulness,uses,using,usually,v,value,various,'ve,very,via,viz,vol,vols,vs,w,want,wants,was,wasn't,way,we,wed,\
 welcome,we'll,went,were,weren't,we've,what,whatever,what'll,whats,when,whence,whenever,where,whereafter,whereas,whereby,wherein,\
 wheres,whereupon,wherever,whether,which,while,whim,whither,who,whod,whoever,whole,who'll,whom,whomever,whos,whose,why,widely,\
-willing,wish,with,within,without,won't,words,world,would,wouldn't,www,x,y,yes,yet,you,youd,you'll,your,youre,yours,yourself,\
+willing,_,wish,with,within,without,won't,words,world,would,wouldn't,www,x,y,yes,yet,you,youd,you'll,your,youre,yours,yourself,\
 yourselves,you've,z,zero,will,Ms,Mrs,Mr,s";
 
 function getDirectory(path) {
@@ -88,7 +88,7 @@ for(var i=0;i<Path.length;i++) {
     for(var j=0;j<filePath.length;j++){
         var content = fs.readFileSync(filePath[j],'utf-8').removeStopWords();
         var rep = new RegExp(/\W+/,'g');
-        content = content.replace(rep,' ').replace(/[0-9]/g,'');
+        content = content.replace(rep,' ').replace(/\_/g,'').replace(/\s\s+/g, ' ').replace(/[0-9]/g,'');
         var newPath = "train"+filePath[j].replace(/data/g,'');
         fs.writeFile(newPath,content);
     }
