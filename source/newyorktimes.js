@@ -1,5 +1,5 @@
-const newsTool = require('./newsTool.js');
-const category = require('./category.js');
+const newsTool = require('./../newsTool.js');
+const category = require('./../category.js');
 
 const tech = category.newyork_tech;
 const entertainment = category.newyork_entertainment;

@@ -83,7 +83,48 @@ const newyork_money = {
         format:"div[class=story-body-supplemental] p"
 }
 
+
+// BBC
+const bbc_tech = {
+        name:"tech",
+        url:"http://feeds.nytimes.com/nyt/rss/Technology",
+        format:"div[class=story-body-supplemental] p"
+}
+const bbc_entertainment = {
+        name:"entertainment",
+        url:"http://www.nytimes.com/services/xml/rss/nyt/Arts.xml",
+        format:"div[class=story-body-supplemental] p"
+}
+
+const bbc_politics = {
+        name:"politics",
+        url:"http://feeds.bbci.co.uk/news/politics/rss.xml",
+        format:"div[class=story-body__inner] p"
+}
+
+const bbc_travel = {
+        name:"travel",
+        url:"http://www.nytimes.com/services/xml/rss/nyt/Travel.xml",
+        format:"div[class=story-body-supplemental] p"
+}
+const bbc_sport = {
+        name:"sport",
+        url:"http://www.nytimes.com/services/xml/rss/nyt/Sports.xml",
+        format:"div[class=story-body-supplemental] p"
+}
+const bbc_health = {
+        name:"health",
+        url:"http://www.nytimes.com/services/xml/rss/nyt/Health.xml",
+        format:"div[class=story-body-supplemental] p"
+}
+const bbc_money = {
+        name:"money",
+        url:"http://www.nytimes.com/services/xml/rss/nyt/Economy.xml",
+        format:"div[class=story-body-supplemental] p"
+}
+
 module.exports = {
     cnn_money,cnn_travel,cnn_entertainment,cnn_sport,cnn_tech,cnn_health,cnn_politics,
-    newyork_tech,newyork_entertainment,newyork_politics,newyork_travel,newyork_sport,newyork_health,newyork_money
+    newyork_tech,newyork_entertainment,newyork_politics,newyork_travel,newyork_sport,newyork_health,newyork_money,
+    bbc_tech,bbc_money,bbc_sport,bbc_health,bbc_travel,bbc_politics,bbc_entertainment
 };

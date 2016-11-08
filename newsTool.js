@@ -30,16 +30,13 @@ function parseContent(category,url,content,callback) {
         var item = $(this).text();
         contentArray.push(item) ;
     });
-
     var dict = {};
     let title = $('title').each(function(i, elem) {
         var item = $(this).text();
-        var arr = item.split("-");
-        if(arr.length>1){
-            dict.title = arr[0];
-            dict.date = arr[1];
-        }else {
-            dict.title = arr[0];
+        var rep = new RegExp(/\W+/,'g');
+        item = item.replace(rep," ");
+        if(item!="BBC News"){
+            dict.title = item;
         }
     });
     dict.url = url;
@@ -75,17 +72,16 @@ function down(cate) {
     });
 }
 
+var crypto = require('crypto');
+
 function downloadContent(cate,item) {
     const url = item.link;
     network.download(url,function(content){
         parseContent(cate,url,content,function(result){
                 var title = result.title;
-                title = title.replace('‘','').replace(':','').replace('/','');
-                var crypto = require('crypto');
-                var hash = crypto.createHash('md5').update(title).digest('hex');
-                var filename = "data/"+cate.name+"/"+hash+".txt";
+                var hash = title;               
+                var filename = "data_bbc/"+cate.name+"/"+hash+".txt";
                 fs.writeFile(filename,result.content);
-                // console.log("---------\n");
         });
     });
 }
