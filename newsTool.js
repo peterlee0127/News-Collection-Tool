@@ -44,7 +44,7 @@ function parseContent(category,url,content,callback) {
         if(contentArray.length==result.length) {
             var temp = [];
             for(var i=0;i<contentArray.length;i++){
-                if(!contentArray[i].includes("READ:") && !contentArray[i].includes("A version of this article")){
+                if(!contentArray[i].includes("Media playback") && !contentArray[i].includes("READ:") &&  !contentArray[i].includes("Follow us on") && !contentArray[i].includes("A version of this article")){
                     temp.push(contentArray[i]);
                 }
             }
@@ -79,8 +79,7 @@ function downloadContent(cate,item) {
     network.download(url,function(content){
         parseContent(cate,url,content,function(result){
                 var title = result.title;
-                var hash = title;               
-                var filename = "data_bbc/"+cate.name+"/"+hash+".txt";
+                var filename = "data/"+cate.name+"/"+title+".txt";
                 fs.writeFile(filename,result.content);
         });
     });

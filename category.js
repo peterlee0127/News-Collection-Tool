@@ -87,13 +87,13 @@ const newyork_money = {
 // BBC
 const bbc_tech = {
         name:"tech",
-        url:"http://feeds.nytimes.com/nyt/rss/Technology",
-        format:"div[class=story-body-supplemental] p"
+        url:"http://feeds.bbci.co.uk/news/technology/rss.xml",
+        format:"div[class=story-body__inner] p"
 }
 const bbc_entertainment = {
         name:"entertainment",
-        url:"http://www.nytimes.com/services/xml/rss/nyt/Arts.xml",
-        format:"div[class=story-body-supplemental] p"
+        url:"http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml",
+        format:"div[class=story-body__inner] p"
 }
 
 const bbc_politics = {
@@ -102,29 +102,24 @@ const bbc_politics = {
         format:"div[class=story-body__inner] p"
 }
 
-const bbc_travel = {
-        name:"travel",
-        url:"http://www.nytimes.com/services/xml/rss/nyt/Travel.xml",
-        format:"div[class=story-body-supplemental] p"
-}
 const bbc_sport = {
         name:"sport",
-        url:"http://www.nytimes.com/services/xml/rss/nyt/Sports.xml",
-        format:"div[class=story-body-supplemental] p"
+        url:"http://feeds.bbci.co.uk/sport/rss.xml",
+        format:"div[id=story-body] p"
 }
 const bbc_health = {
         name:"health",
-        url:"http://www.nytimes.com/services/xml/rss/nyt/Health.xml",
-        format:"div[class=story-body-supplemental] p"
+        url:"http://feeds.bbci.co.uk/news/health/rss.xml",
+        format:"div[class=story-body__inner] p"
 }
 const bbc_money = {
         name:"money",
-        url:"http://www.nytimes.com/services/xml/rss/nyt/Economy.xml",
-        format:"div[class=story-body-supplemental] p"
+        url:"http://feeds.bbci.co.uk/news/business/rss.xml",
+        format:"div[class=story-body__inner] p"
 }
 
 module.exports = {
     cnn_money,cnn_travel,cnn_entertainment,cnn_sport,cnn_tech,cnn_health,cnn_politics,
     newyork_tech,newyork_entertainment,newyork_politics,newyork_travel,newyork_sport,newyork_health,newyork_money,
-    bbc_tech,bbc_money,bbc_sport,bbc_health,bbc_travel,bbc_politics,bbc_entertainment
+    bbc_tech,bbc_money,bbc_sport,bbc_health,bbc_politics,bbc_entertainment
 };
