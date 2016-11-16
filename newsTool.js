@@ -55,12 +55,23 @@ function parseContent(category,url,content,callback) {
     }
 }
 
-function getNews(categoryArray){
+
+var news = [];
+function addCategory(categoryArray){
     for(var i=0;i<categoryArray.length;i++){
-        const cate = categoryArray[i];
-        setTimeout(down,i*10000,cate);
+          const cate = categoryArray[i];
+        news.push(cate);
     }
 }
+
+function start() {
+  for(var i=0;i<news.length;i++){
+      const cate = news[i];
+      setTimeout(down,i*15000,cate);
+  }
+}
+
+
 function down(cate) {
     console.log(cate.name);
     network.download(cate.url,function(category) {
@@ -71,8 +82,6 @@ function down(cate) {
         });
     });
 }
-
-var crypto = require('crypto');
 
 function downloadContent(cate,item) {
     const url = item.link;
@@ -86,4 +95,5 @@ function downloadContent(cate,item) {
 }
 
 
-exports.getNews = getNews;
+exports.addCategory = addCategory;
+exports.start = start;
