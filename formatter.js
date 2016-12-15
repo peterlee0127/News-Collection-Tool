@@ -28,6 +28,9 @@ String.prototype.removeStopWords = function()
 	return words.join(" ");
 }
 
+String.prototype.fixLength = function() {
+  return this.split(/\s+/).slice(0,300).join(" ");
+}
 
 
 var stopWords = "white,black,red,yellow,men,lots,set,talk,walk,better,du,a,dr,able,about,above,abst,accordance,according,accordingly,across,act,actually,added,adj,\
@@ -86,10 +89,21 @@ for(var i=0;i<Path.length;i++) {
     var path = getDirectory(Path[i]);
     var filePath = path.map(function(_){return Path[i]+"/"+_});
     for(var j=0;j<filePath.length;j++){
-        var content = fs.readFileSync(filePath[j],'utf-8').removeStopWords();
+        setTimeout(processFile,j*50+i*3,filePath[j]);
+    }
+}
+
+function processFile(filepath) {
+        var content = fs.readFileSync(filepath,'utf-8');
+        content = content.toLowerCase();
         var rep = new RegExp(/\W+/,'g');
         content = content.replace(rep,' ').replace(/\_/g,'').replace(/\s\s+/g, ' ').replace(/[0-9]/g,'');
-        var newPath = "train"+filePath[j].replace(/data/g,'');
-        fs.writeFile(newPath,content);
-    }
+        content = content.removeStopWords();
+        content = content.fixLength();
+        var newPath = "train"+filepath.replace(/data/g,'');
+       // console.log(filepath+"->"+newPath); 
+        console.log("write: "+newPath);
+        fs.writeFile(newPath,content,function(err){
+             if (err) throw err;
+        });
 }
