@@ -29,7 +29,7 @@ String.prototype.removeStopWords = function()
 }
 
 String.prototype.fixLength = function() {
-  return this.split(/\s+/).slice(0,300).join(" ");
+  return this.split(/\s+/).slice(0,50).join(" ");
 }
 
 
@@ -89,7 +89,7 @@ for(var i=0;i<Path.length;i++) {
     var path = getDirectory(Path[i]);
     var filePath = path.map(function(_){return Path[i]+"/"+_});
     for(var j=0;j<filePath.length;j++){
-        setTimeout(processFile,j*50+i*3,filePath[j]);
+        setTimeout(processFile,j*100+i*5,filePath[j]);
     }
 }
 
@@ -99,11 +99,14 @@ function processFile(filepath) {
         var rep = new RegExp(/\W+/,'g');
         content = content.replace(rep,' ').replace(/\_/g,'').replace(/\s\s+/g, ' ').replace(/[0-9]/g,'');
         content = content.removeStopWords();
-        content = content.fixLength();
         var newPath = "train"+filepath.replace(/data/g,'');
        // console.log(filepath+"->"+newPath); 
         console.log("write: "+newPath);
         fs.writeFile(newPath,content,function(err){
-             if (err) throw err;
+             if (err) 
+             {       
+                console.log(err);
+                process.exit();
+             }
         });
 }

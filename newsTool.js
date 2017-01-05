@@ -89,7 +89,7 @@ function downloadContent(cate,item) {
         parseContent(cate,url,content,function(result){
                 var title = result.title;
                 var filename = "data/"+cate.name+"/"+title+".txt";
-                fs.writeFile(filename,result.content);
+                fs.writeFile(filename,result.content,function(){});
         });
     });
 }
