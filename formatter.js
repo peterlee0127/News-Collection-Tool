@@ -100,13 +100,19 @@ function processFile(filepath) {
         content = content.replace(rep,' ').replace(/\_/g,'').replace(/\s\s+/g, ' ').replace(/[0-9]/g,'');
         content = content.removeStopWords();
         var newPath = "train"+filepath.replace(/data/g,'');
-       // console.log(filepath+"->"+newPath); 
-        console.log("write: "+newPath);
-        fs.writeFile(newPath,content,function(err){
-             if (err) 
+        var folder = newPath.split("/").splice(0,2);
+        folder = folder[0]+"/"+folder[1];
+        if(!fs.existsSync(folder)){
+          console.log("folder not avaiable, create the foler");
+          fs.mkdir(folder);
+        }
+          console.log("write: "+newPath);
+          fs.writeFile(newPath,content,function(err){
+            if (err) 
              {       
                 console.log(err);
                 process.exit();
              }
-        });
+          });
+      
 }

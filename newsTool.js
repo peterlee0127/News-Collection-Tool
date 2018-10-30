@@ -39,6 +39,7 @@ function parseContent(category,url,content,callback) {
             dict.title = item;
         }
     });
+    console.log("\t"+title);
     dict.url = url;
     if(result.length>0){
         if(contentArray.length==result.length) {
